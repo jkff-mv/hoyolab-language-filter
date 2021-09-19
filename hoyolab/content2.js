@@ -1,75 +1,40 @@
-// target
-const target = document.body;
-let titlehead = null;
-let title = null;
-var isJapanese = false;
-
-
 function includeJa(text) {
   try {
-    let gmi = 'gmi';
-    let regeIncludeHiragana = '^(?=.*[\u3041-\u3096]).*$';
-    let regeIncludeKatakana = '^(?=.*[\u30A1-\u30FA]).*$';
-    let regeIncludeKanji = '^(?=.*[\u4E00-\u9FFF]).*$';
-    let regeHiragana = new RegExp(regeIncludeHiragana, gmi);
-    let regeKatakana = new RegExp(regeIncludeKatakana, gmi);
-    let regeKanji = new RegExp(regeIncludeKanji, gmi);
+    const flag = 'gmi';
+    const regexIncludeHiragana = '^(?=.*[\u3041-\u3096]).*$';
+    const regexIncludeKatakana = '^(?=.*[\u30A1-\u30FA]).*$';
+    const regexIncludeKanji = '^(?=.*[\u4E00-\u9FFF]).*$';
+    const regexHiragana = new RegExp(regexIncludeHiragana, flag);
+    const regexKatakana = new RegExp(regexIncludeKatakana, flag);
+    const regexKanji = new RegExp(regexIncludeKanji, flag);
 
-    let includeJa = false;
-    if (regeHiragana.test(text))
-      includeJa = true;
-    if (regeKatakana.test(text))
-      includeJa = true;
-    if (regeKanji.test(text))
-      includeJa = true;
-
-    return includeJa;
+    if (regexHiragana.test(text))
+      return true;
+    if (regexKatakana.test(text))
+      return true;
+    if (regexKanji.test(text))
+      return true;
   } catch (error) {
-    alert(error);
+    console.error(error);
+    return true;
   }
 }
 
-// MO instance
-const mutationObserver = new MutationObserver(callback);
-// callback
 function callback(mutations) {
-  //console.log(mutations);
-  //mutations.forEach( mutation => {
-  // console.log(mutation);
-  let element = document.getElementsByClassName("mhy-article-card");
-  console.log(element.length);
-  for (let i = 0; i < element.length; i++) {
-    console.log(i);
-    //console.log(element[i]);
-    titlehead = element[i].getElementsByClassName("mhy-article-card__title");
-    console.log(titlehead);
-    title = titlehead[0].innerText;
-    /*
-          for(var j=0; j < title.length; j++){
-            if(title.charCodeAt(j) >= 256) {
-              isJapanese = true;
-            break;
-          }else{
-            isJapanese = false;
-          }
-          }
-          */
-    isJapanese = includeJa(title);
-    console.log(title);
-    console.log(isJapanese);
+  const elements = document.getElementsByClassName('mhy-article-card');
 
-    if (isJapanese == false) {
-      element[i].remove();
-    }
+  for (let i = 0; i < elements.length; i++) {
+    const titleHeads = elements[i].getElementsByClassName('mhy-article-card__title');
+    const title = titleHeads[0].innerText;
 
+    if (!includeJa(title))
+      elements[i].remove();
   }
-  ;
 }
 
-// options
+const mutationObserver = new MutationObserver(callback);
+const target = document.body;
 const option = {
-  childList: true,
-  subtree: true
+  childList: true, subtree: true
 };
-// MO target & options
 mutationObserver.observe(target, option);
