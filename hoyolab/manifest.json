@@ -8,5 +8,13 @@
     "js": [
       "content2.js"
     ]
-  }]
+  }],
+  "background": {
+    "scripts": ["event.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "contextMenus",
+    "activeTab"
+  ]
 }
