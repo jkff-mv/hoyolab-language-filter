@@ -39,3 +39,13 @@ const option = {
   childList: true, subtree: true
 };
 mutationObserver.observe(target, option);
+
+chrome.runtime.onMessage.addListener((request, sender) => {
+  if (request.jaFilterEnabled) {
+    mutationObserver.observe(target, option);
+    console.log("Japanese language filter enabled.")
+  } else {
+    mutationObserver.disconnect();
+    console.log("Japanese language filter disabled.")
+  }
+});
