@@ -14,7 +14,7 @@ function includeJa(text) {
       return true;
     if (regexKanji.test(text))
       return true;
-    return false;      
+    return false;
   } catch (error) {
     console.error(error);
     return true;
@@ -38,14 +38,28 @@ const target = document.body;
 const option = {
   childList: true, subtree: true
 };
-mutationObserver.observe(target, option);
+
+chrome.runtime.sendMessage({ method: 'getItem' }, (response) => {
+  const jaFilterJson = response.value;
+  const jaFilter = jaFilterJson ? JSON.parse(jaFilterJson) : { enabled: true };
+
+  if (jaFilter.enabled) {
+    mutationObserver.observe(target, option);
+    console.log('Japanese language filter enabled.')
+  } else {
+    mutationObserver.disconnect();
+    console.log('Japanese language filter disabled.')
+  }
+});
 
 chrome.runtime.onMessage.addListener((request, sender) => {
   if (request.jaFilterEnabled) {
+    chrome.runtime.sendMessage({ method: 'setItem', value: JSON.stringify({ enabled: true }) });
     mutationObserver.observe(target, option);
-    console.log("Japanese language filter enabled.")
+    console.log('Japanese language filter enabled.')
   } else {
+    chrome.runtime.sendMessage({ method: 'setItem', value: JSON.stringify({ enabled: false }) });
     mutationObserver.disconnect();
-    console.log("Japanese language filter disabled.")
+    console.log('Japanese language filter disabled.')
   }
 });
