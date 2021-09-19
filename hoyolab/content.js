@@ -14,6 +14,7 @@ function includeJa(text) {
       return true;
     if (regexKanji.test(text))
       return true;
+    return false;      
   } catch (error) {
     console.error(error);
     return true;
