@@ -2,7 +2,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const key = 'ja_filter';
 
   if (request.method === 'getItem') {
-    sendResponse({value: localStorage.getItem(key)});
+    sendResponse({ value: localStorage.getItem(key) });
     return;
   }
   if (request.method === 'setItem') {

@@ -22,11 +22,12 @@ window.onload = () => {
 
     const mainElement = document.getElementsByClassName('main')[0];
     const messageElement = document.createElement('p');
-    const messageContent = document.createTextNode('HoYoLABのページを開いた状態で操作ください。');
+    const messageContent = document
+      .createTextNode('HoYoLABのページを開いた状態で操作ください。');
     messageElement.appendChild(messageContent);
     mainElement.appendChild(messageElement);
 
-    document.querySelectorAll('input').forEach( e => e.disabled = true );
+    document.querySelectorAll('input').forEach(e => e.disabled = true);
   });
 
   // ボタン操作によるコールバック用のイベントを登録する。
@@ -34,7 +35,9 @@ window.onload = () => {
     radio.addEventListener('change', (event) => {
       const filterEnabled = event.target.value.toLowerCase() === 'true';
 
-      localStorage.setItem('ja_filter', JSON.stringify({ enabled: filterEnabled }));
+      localStorage.setItem(
+        'ja_filter', JSON.stringify({ enabled: filterEnabled })
+      );
 
       const sendData = { jaFilterEnabled: filterEnabled };
       function sendMessage(tabs) {
