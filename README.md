@@ -3,7 +3,7 @@
 ## Overview
 
 [HoYoLAB](https://www.hoyolab.com/home) の日本語フィルタを追加するためのChromeの拡張機能です。  
-HoYoLABに投稿されたスレッドから、日本語による投稿のみを表示するための機能を提供します。  
+HoYoLABに投稿されたスレッドのうち、日本語による投稿のみを表示するための機能を提供します。  
 2021年9月16日のHoYoLABのリニューアルに伴い以前は存在した言語フィルタが消滅したため、それに変わる代替手段として利用できます。  
 
 本リポジトリは [suezu/hoyolab-language-filter](https://github.com/suezu/hoyolab-language-filter) のForkで、フィルタのON/OFF制御機能を追加しています（suezuさんに感謝！）。  
